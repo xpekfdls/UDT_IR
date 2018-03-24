@@ -1,0 +1,30 @@
+﻿빌드 시작: 2018-03-06 오후 5:38:38
+     1>2 노드의 "D:\desktop\JoSeongHyeon\UDTvsPS_experiment_180114(C++)\UDT_IR\UDT_IR.vcxproj" 프로젝트(Build 대상)입니다.
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(381,5): warning MSB8028: The intermediate directory (x64\Release\) contains files shared from another project (UDTController (DESKTOP-06FG7L7의 충돌된 사본 2016-07-31).vcxproj, UDTController.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /I"C:\Program Files\Microsoft SDKs\Kinect\v2.0_1409\\inc" /I"C:\Program Files (x86)\National Instruments\Shared\ExternalCompilerSupport\C\include" /Zi /nologo /W3 /WX- /sdl /O2 /Oi /GL /D WIN64 /D _WINDOWS /D NDEBUG /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"x64\Release\UDT_IR.pch" /Fo"x64\Release\\" /Fd"x64\Release\vc120.pdb" /Gd /TP /errorReport:prompt ModeDlg.cpp UDT_IR.cpp UDT_IRDlg.cpp VRClientSocket.cpp
+         ModeDlg.cpp
+         UDT_IR.cpp
+         UDT_IRDlg.cpp
+     1>UDT_IRDlg.cpp(756): warning C4244: '=' : 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+     1>UDT_IRDlg.cpp(1766): warning C4244: 'return' : 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+         VRClientSocket.cpp
+       ResourceCompile:
+         C:\Program Files (x86)\Windows Kits\8.1\bin\x86\rc.exe /D NDEBUG /D _UNICODE /D UNICODE /l"0x0412" /Ix64\Release\ /nologo /fo"x64\Release\UDT_IR.res" UDT_IR.rc 
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"D:\desktop\JoSeongHyeon\UDTvsPS_experiment_180114(C++)\x64\Release\UDT_IR.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\Program Files\Microsoft SDKs\Kinect\v2.0_1409\\lib\x64" /LIBPATH:"C:\Program Files (x86)\National Instruments\Shared\ExternalCompilerSupport\C\lib64\msvc" kinect20.lib windowscodecs.lib d2d1.lib nidaqmx.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /manifestinput:"C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\Include\Manifest\dpiaware.manifest" /PDB:"D:\desktop\JoSeongHyeon\UDTvsPS_experiment_180114(C++)\x64\Release\UDT_IR.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /ENTRY:"wWinMainCRTStartup" /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\desktop\JoSeongHyeon\UDTvsPS_experiment_180114(C++)\x64\Release\UDT_IR.lib" /MACHINE:X64 x64\Release\UDT_IR.res
+         x64\Release\CommThread.obj
+         x64\Release\DXRenderer.obj
+         x64\Release\ModeDlg.obj
+         x64\Release\stdafx.obj
+         x64\Release\UDT_IR.obj
+         x64\Release\UDT_IRDlg.obj
+         x64\Release\VRClientSocket.obj
+         코드를 생성하고 있습니다.
+         코드를 생성했습니다.
+         UDT_IR.vcxproj -> D:\desktop\JoSeongHyeon\UDTvsPS_experiment_180114(C++)\x64\Release\UDT_IR.exe
+     1>"D:\desktop\JoSeongHyeon\UDTvsPS_experiment_180114(C++)\UDT_IR\UDT_IR.vcxproj" 프로젝트를 빌드했습니다(Build 대상).
+
+빌드했습니다.
+
+경과 시간: 00:00:05.27

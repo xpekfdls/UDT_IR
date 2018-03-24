@@ -1,0 +1,7 @@
+﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(381,5): warning MSB8028: The intermediate directory (x64\Release\) contains files shared from another project (UDTController (DESKTOP-06FG7L7의 충돌된 사본 2016-07-31).vcxproj, UDTController.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  UDT_IR.cpp
+  UDT_IRDlg.cpp
+  VRClientSocket.cpp
+  
+UDT_IR.rc(74): error RC2135: file not found: C:\Users\NREL_Note\Documents\Dropbox\10_Kinect\UDT_IR_IR\UDT_IR\res\UDT_IR.ico
+  

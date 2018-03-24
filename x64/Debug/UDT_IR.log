@@ -1,0 +1,31 @@
+﻿빌드 시작: 2018-03-24 오후 11:32:06
+     1>2 노드의 "C:\Users\NREL\Documents\GitHub\UDTvsPS_experiment-C\UDT_IR\UDT_IR.vcxproj" 프로젝트(Build 대상)입니다.
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /I"C:\Program Files\Microsoft SDKs\Kinect\v2.0_1409\\inc" /I"C:\Program Files (x86)\National Instruments\Shared\ExternalCompilerSupport\C\include" /Zi /nologo /W3 /WX- /sdl /Od /D WIN64 /D _WINDOWS /D _DEBUG /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"x64\Debug\UDT_IR.pch" /Fo"x64\Debug\\" /Fd"x64\Debug\vc120.pdb" /Gd /TP /errorReport:prompt UDT_IRDlg.cpp
+         UDT_IRDlg.cpp
+     1>UDT_IRDlg.cpp(886): warning C4244: '=' : 'float64'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+     1>UDT_IRDlg.cpp(887): warning C4244: '=' : 'float64'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+     1>UDT_IRDlg.cpp(888): warning C4244: '=' : 'float64'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+     1>UDT_IRDlg.cpp(889): warning C4244: '=' : 'float64'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+     1>UDT_IRDlg.cpp(890): warning C4244: '=' : 'float64'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+     1>UDT_IRDlg.cpp(891): warning C4244: '=' : 'float64'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+     1>UDT_IRDlg.cpp(892): warning C4244: '=' : 'float64'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+     1>UDT_IRDlg.cpp(951): warning C4244: '인수' : 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+     1>UDT_IRDlg.cpp(1498): warning C4244: '인수' : 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+     1>UDT_IRDlg.cpp(2164): warning C4244: 'return' : 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\NREL\Documents\GitHub\UDTvsPS_experiment-C\x64\Debug\UDT_IR.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Program Files\Microsoft SDKs\Kinect\v2.0_1409\\lib\x64" /LIBPATH:"C:\Program Files (x86)\National Instruments\Shared\ExternalCompilerSupport\C\lib64\msvc" kinect20.lib windowscodecs.lib d2d1.lib nidaqmx.lib chartdir60.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /manifestinput:"C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\Include\Manifest\dpiaware.manifest" /DEBUG /PDB:"C:\Users\NREL\Documents\GitHub\UDTvsPS_experiment-C\x64\Debug\UDT_IR.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /ENTRY:"wWinMainCRTStartup" /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\NREL\Documents\GitHub\UDTvsPS_experiment-C\x64\Debug\UDT_IR.lib" /MACHINE:X64 x64\Debug\UDT_IR.res
+         x64\Debug\ChartViewer.obj
+         x64\Debug\CommThread.obj
+         x64\Debug\DXRenderer.obj
+         x64\Debug\ModeDlg.obj
+         x64\Debug\stdafx.obj
+         x64\Debug\UDT_IR.obj
+         x64\Debug\UDT_IRDlg.obj
+         x64\Debug\VRClientSocket.obj
+         UDT_IR.vcxproj -> C:\Users\NREL\Documents\GitHub\UDTvsPS_experiment-C\x64\Debug\UDT_IR.exe
+     1>"C:\Users\NREL\Documents\GitHub\UDTvsPS_experiment-C\UDT_IR\UDT_IR.vcxproj" 프로젝트를 빌드했습니다(Build 대상).
+
+빌드했습니다.
+
+경과 시간: 00:00:02.13

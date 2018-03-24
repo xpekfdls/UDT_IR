@@ -1,0 +1,23 @@
+﻿빌드 시작: 2016-07-31 오후 3:55:45
+     1>2 노드의 "D:\Dropbox\10_Kinect\UDTController_IR\UDTController\UDTController.vcxproj" 프로젝트(Build 대상)입니다.
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /I"C:\Program Files\Microsoft SDKs\Kinect\v2.0_1409\\inc" /I"C:\Program Files (x86)\National Instruments\Shared\ExternalCompilerSupport\C\include" /Zi /nologo /W3 /WX- /sdl /O2 /Oi /GL /D WIN64 /D _WINDOWS /D NDEBUG /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"x64\Release\UDTController.pch" /Fo"x64\Release\\" /Fd"x64\Release\vc120.pdb" /Gd /TP /errorReport:prompt UDTControllerDlg.cpp
+         UDTControllerDlg.cpp
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Dropbox\10_Kinect\UDTController_IR\x64\Release\UDTController.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\Program Files\Microsoft SDKs\Kinect\v2.0_1409\\lib\x64" /LIBPATH:"C:\Program Files (x86)\National Instruments\Shared\ExternalCompilerSupport\C\lib64\msvc" kinect20.lib windowscodecs.lib d2d1.lib nidaqmx.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /manifestinput:"C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\Include\Manifest\dpiaware.manifest" /PDB:"D:\Dropbox\10_Kinect\UDTController_IR\x64\Release\UDTController.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /ENTRY:"wWinMainCRTStartup" /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Dropbox\10_Kinect\UDTController_IR\x64\Release\UDTController.lib" /MACHINE:X64 x64\Release\UDTController.res
+         x64\Release\CommThread.obj
+         x64\Release\DXRenderer.obj
+         x64\Release\ModeDlg.obj
+         x64\Release\stdafx.obj
+         x64\Release\UDTClientSocket.obj
+         x64\Release\UDTController.obj
+         x64\Release\UDTControllerDlg.obj
+         x64\Release\VRClientSocket.obj
+         코드를 생성하고 있습니다.
+         코드를 생성했습니다.
+         UDTController.vcxproj -> D:\Dropbox\10_Kinect\UDTController_IR\x64\Release\UDTController.exe
+     1>"D:\Dropbox\10_Kinect\UDTController_IR\UDTController\UDTController.vcxproj" 프로젝트를 빌드했습니다(Build 대상).
+
+빌드했습니다.
+
+경과 시간: 00:00:03.52

@@ -1,0 +1,7 @@
+﻿  ModeDlg.cpp
+  UDT_IR.cpp
+c:\users\nrel_note\documents\dropbox\seongjin\kaist\treadmill\1)kinect\udtvsps_experiment_161202\udt_ir\UDT_IRDlg.h(12): fatal error C1083: 포함 파일을 열 수 없습니다. 'Eigen/Dense': No such file or directory
+  UDT_IRDlg.cpp
+c:\users\nrel_note\documents\dropbox\seongjin\kaist\treadmill\1)kinect\udtvsps_experiment_161202\udt_ir\UDT_IRDlg.h(12): fatal error C1083: 포함 파일을 열 수 없습니다. 'Eigen/Dense': No such file or directory
+  VRClientSocket.cpp
+c:\users\nrel_note\documents\dropbox\seongjin\kaist\treadmill\1)kinect\udtvsps_experiment_161202\udt_ir\UDT_IRDlg.h(12): fatal error C1083: 포함 파일을 열 수 없습니다. 'Eigen/Dense': No such file or directory

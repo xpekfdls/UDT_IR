@@ -1,0 +1,11 @@
+﻿  ModeDlg.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  VRClientSocket.cpp
+  UDT_IRDlg.cpp
+UDT_IRDlg.cpp(732): warning C4244: '=' : 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+UDT_IRDlg.cpp(1786): warning C4305: '=' : 'double'에서 'float'(으)로 잘립니다.
+UDT_IRDlg.cpp(1818): warning C4244: 'return' : 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  UDT_IR.cpp
+  코드를 생성하고 있습니다...
+  UDT_IR.vcxproj -> C:\Users\NREL_Note\Documents\Dropbox\Seongjin\KAIST\Treadmill\treadmill control\UDTvsPS_experiment_170919\x64\Debug\UDT_IR.exe
