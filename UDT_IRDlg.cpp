@@ -72,6 +72,8 @@ CUDT_IRDlg::CUDT_IRDlg(CWnd* pParent /*=NULL*/) : CDialogEx(CUDT_IRDlg::IDD, pPa
 , slope(0)
 , m_fPertinterval(0)
 , fSpeed_pp(0)
+, global_current_time(0)
+, global_system_time(0)
 {
 
 	m_strAO = "Dev3/ao0";
@@ -330,17 +332,16 @@ BOOL CUDT_IRDlg::OnInitDialog()
 
 	InitializeDefaultSensor();
 
-	//SetTimer(DataRateTimer, 10, NULL);
-	SetTimer(KinectTimer, 5, NULL);
+	TIMECAPS tc;
+	MMRESULT m_Timer;
+	MMRESULT m_Timer_Kinect;
+	timeGetDevCaps(&tc, sizeof(TIMECAPS));
+	unsigned int Resolution = min(max(tc.wPeriodMin, 0), tc.wPeriodMax);
+	timeBeginPeriod(Resolution);
 
-	///////////////////////////////////
+	m_Timer_Kinect = timeSetEvent(30, Resolution, (LPTIMECALLBACK)TimerProc_Kinect, (DWORD_PTR)this, TIME_PERIODIC);
 
-
-	// Initially set the Run mode
-	//	m_RunPB.SetCheck(1);
 	OnRunPB();
-
-	///////////////////////////////////
 
 	char* AITask = "AnalogInput";
 
@@ -355,9 +356,23 @@ BOOL CUDT_IRDlg::OnInitDialog()
 		CString strTemp(m_strAI);
 		PrintStr(&CString(_T("Analog Input : ") + strTemp));
 	}
-
-
+	global_system_time = timeGetTime();
+	global_current_time = 0;
+	m_btnStart.EnableWindow(FALSE);
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
+}
+
+void CUDT_IRDlg::TimerProc_Kinect(UINT uiID, UINT uiMsg, DWORD_PTR dwUser, DWORD_PTR dw1, DWORD_PTR dw2)
+{
+	CUDT_IRDlg * p = (CUDT_IRDlg*)dwUser;
+	p->global_current_time = (timeGetTime() - p->global_system_time)/1000;
+	p->getData();
+	p->kinectUpdate();
+	//p->chartUpdate();
+}
+void CUDT_IRDlg::TimerProc(UINT uiID, UINT uiMsg, DWORD_PTR dwUser, DWORD_PTR dw1, DWORD_PTR dw2)
+{
+	CUDT_IRDlg * p = (CUDT_IRDlg*)dwUser;
 }
 
 #define PROJECT_NAME _T("UDT_IR")
@@ -437,7 +452,19 @@ void CUDT_IRDlg::OnBnClickedBtnMode()
 		sprintf_s(strSend2, "%d\n", cModeDlg.m_nMode);
 		m_pVRClientSocket->Send(strSend2, static_cast<int>(strlen(strSend2)));
 	}
+
+	if (m_hFile)
+	{
+		CloseHandle(m_hFile);
+		m_hFile = NULL;
+	}
+	if (m_hFile_FSR)
+	{
+		CloseHandle(m_hFile_FSR);
+		m_hFile_FSR = NULL;
+	}
 	ProcessClose();
+	m_btnStart.EnableWindow(TRUE);
 	m_btnMode.EnableWindow(FALSE);
 	Wait(1000);
 }
@@ -563,6 +590,16 @@ void CUDT_IRDlg::OnBnClickedBtnStart()
 			PrintStr(&CString("Counter Input Closed"));
 		}
 
+		m_nMode = 0;
+		m_switch = 0;
+		m_count = 0;
+		fSpeed_p = 0;
+		m_bStart = false;
+
+		m_comboComPort.EnableWindow(TRUE);
+		m_btnStart.SetWindowTextW(_T("Start"));
+		m_btnStart.EnableWindow(FALSE);
+		m_btnMode.EnableWindow(TRUE);
 		if (m_hFile)
 		{
 			CloseHandle(m_hFile);
@@ -573,14 +610,6 @@ void CUDT_IRDlg::OnBnClickedBtnStart()
 			CloseHandle(m_hFile_FSR);
 			m_hFile_FSR = NULL;
 		}
-		m_nMode = 0;
-		m_switch = 0;
-		m_count = 0;
-		fSpeed_p = 0;
-		m_bStart = false;
-		m_comboComPort.EnableWindow(TRUE);
-		m_btnStart.SetWindowTextW(_T("Start"));
-		m_btnMode.EnableWindow(TRUE);
 	}
 }
 
@@ -627,8 +656,6 @@ HRESULT CUDT_IRDlg::InitializeDefaultSensor()
 //
 void CUDT_IRDlg::OnRunPB()
 {
-	// Enable chart update timer
-	SetTimer(ChartUpdateTimer, 250, 0);
 }
 
 //
@@ -636,7 +663,6 @@ void CUDT_IRDlg::OnRunPB()
 //
 void CUDT_IRDlg::OnFreezePB()
 {
-	KillTimer(ChartUpdateTimer);
 }
 
 //////////////////////////////////////////////////////////
@@ -683,7 +709,7 @@ void CUDT_IRDlg::kinectUpdate()
 		// Elapsed Time(second)
 		m_fTime = (float)((nTime - m_nStartTime) / 10000000.0f);
 		// Display Time to EditBox
-		str.Format(_T("%4.3f"), m_fTime);
+		str.Format(_T("%4.3f"), global_current_time);
 		m_editTime.SetWindowTextW(str);
 
 		// FrameRate(Hz)
@@ -769,11 +795,17 @@ void CUDT_IRDlg::kinectUpdate()
 				{
 					float Vw = CalcVwSwing();
 					m_fXrpos = m_fXref + Vw * 0.3f / m_fSpdLmt;
-
 					if (m_fPelPos < 0)
 						m_fSpeed = 0;
 					else
+					{
 						m_fSpeed = (float)(m_fK1 * m_fPelAcc + (m_fK2 - 1) * m_fPelSpd + m_fK3 * (m_fPelPos - m_fXrpos)) + Vw;
+						m_fSpeed = m_fSpeed+2.5;
+						CString check;
+						check.Format(_T("%0.3f"), m_fSpeed);
+						PrintStr(&CString(_T("m_fSpeed") + check));
+					}
+
 
 				}
 				else
@@ -833,7 +865,7 @@ void CUDT_IRDlg::kinectUpdate()
 				m_pVRClientSocket->Send(strSend2, static_cast<int>(strlen(strSend2)));
 			}
 
-			DataSave(m_fTime);
+			DataSave(global_current_time);
 
 			CString str;
 			str.Format(_T("%.2f"), m_fHeadAngle);
@@ -853,6 +885,11 @@ void CUDT_IRDlg::kinectUpdate()
 	CRect rect;
 	Video->GetClientRect(&rect);
 	InvalidateRect(&rect, 0);
+}
+
+void CUDT_IRDlg::chartUpdate()
+{
+	m_ChartViewer.updateViewPort(true, false);
 }
 
 void CUDT_IRDlg::getData()
@@ -923,14 +960,9 @@ void CUDT_IRDlg::getData()
 	} while (m_nextDataTime < now);
 
 
-	m_fFPS_data = (double)clock() / 1000;
-
-	// Elapsed Time(second)
-	m_fTime = (float)((m_fFPS_data - m_nStartTime));
-
 	if (m_nMode == 7 || m_nMode == 8)
 	{
-		DataSave_FSR(m_fFPS_data, m_dataSeriesA1[m_currentIndex - 1], m_dataSeriesA2[m_currentIndex - 1], m_dataSeriesA3[m_currentIndex - 1], m_dataSeriesA4[m_currentIndex - 1], m_dataSeriesA5[m_currentIndex - 1], m_dataSeriesA6[m_currentIndex - 1], m_dataSeriesA7[m_currentIndex - 1]);
+		DataSave_FSR(global_current_time, m_dataSeriesA1[m_currentIndex - 1], m_dataSeriesA2[m_currentIndex - 1], m_dataSeriesA3[m_currentIndex - 1], m_dataSeriesA4[m_currentIndex - 1], m_dataSeriesA5[m_currentIndex - 1], m_dataSeriesA6[m_currentIndex - 1], m_dataSeriesA7[m_currentIndex - 1]);
 
 	}
 	//
@@ -1061,22 +1093,6 @@ void CUDT_IRDlg::OnTimer(UINT_PTR nIDEvent)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
 
-
-	switch (nIDEvent)
-	{
-	case DataRateTimer:
-		// Is data acquisition timer - get a new data sample
-		getData();
-		break;
-	case ChartUpdateTimer:
-		// Is chart update timer - request chart update
-		m_ChartViewer.updateViewPort(true, false);
-		break;
-	case KinectTimer:
-		kinectUpdate();
-		getData();
-		break;
-	}
 
 
 
@@ -1236,8 +1252,9 @@ double CUDT_IRDlg::HDR(double gyro)
 
 void CUDT_IRDlg::DataSave(float fTime)
 {
-	if (m_hFile == NULL)
+	if (m_hFile == NULL && m_bStart)
 	{
+		PrintStr(&CString(_T("File Created")));
 		CString Filename;
 		CString Filepath;
 		CString strFile;
@@ -1245,10 +1262,6 @@ void CUDT_IRDlg::DataSave(float fTime)
 		GetCurrentDirectory(sizeof(Filepath), (LPWSTR)(LPCWSTR)Filepath);
 
 		Filepath.Format(_T("TreadmillData"));
-		//PathAppend((LPWSTR)(LPCWSTR)Filepath, _T("\\TreadmillData"));
-
-		/*if (GetFileAttributes(Filepath) == -1)
-		CreateDirectory(Filepath, NULL);*/
 
 		m_editFilename.GetWindowTextW(Filename);
 
@@ -1332,8 +1345,30 @@ void CUDT_IRDlg::DataSave_FSR(float fTime, double FSR1, double FSR2, double FSR3
 
 
 		DWORD nWritten;
+		char index[100] = { 0 };
+
+		sprintf_s(index, "%% ref_X :%.4f", m_fXref);
+		WriteFile(m_hFile_FSR, index, (DWORD)(sizeof(char)* strlen(index)), &nWritten, NULL);
+		WriteFile(m_hFile_FSR, "\r\n", (DWORD)(sizeof(char)* 2), &nWritten, NULL);
+
+		sprintf_s(index, "%% max_spd :%.4f", m_fSpdLmt);
+		WriteFile(m_hFile_FSR, index, (DWORD)(sizeof(char)* strlen(index)), &nWritten, NULL);
+		WriteFile(m_hFile_FSR, "\r\n", (DWORD)(sizeof(char)* 2), &nWritten, NULL);
+
+		sprintf_s(index, "%% com_spd :%.4f", m_fComfSpd);
+		WriteFile(m_hFile_FSR, index, (DWORD)(sizeof(char)* strlen(index)), &nWritten, NULL);
+		WriteFile(m_hFile_FSR, "\r\n", (DWORD)(sizeof(char)* 2), &nWritten, NULL);
+
+		sprintf_s(index, "%% repeat time :%.4f", m_fRepeatTime);
+		WriteFile(m_hFile_FSR, index, (DWORD)(sizeof(char)* strlen(index)), &nWritten, NULL);
+		WriteFile(m_hFile_FSR, "\r\n", (DWORD)(sizeof(char)* 2), &nWritten, NULL);
+
+		sprintf_s(index, "%% steady_interval :%.4f", m_fSteady_Time_Interval);
+		WriteFile(m_hFile_FSR, index, (DWORD)(sizeof(char)* strlen(index)), &nWritten, NULL);
+		WriteFile(m_hFile_FSR, "\r\n", (DWORD)(sizeof(char)* 2), &nWritten, NULL);
+
 		char strData[73] = { 0 };
-		sprintf_s(strData, "%% Time\tA1\tA2\tA3\tA4\tA5\tA6\t");
+		sprintf_s(strData, "%% Time\tA1\tA2\tA3\tA4\tA5\tA6\tTrigger\tSpeed\t");
 		WriteFile(m_hFile_FSR, strData, (DWORD)(sizeof(char)* strlen(strData)), &nWritten, NULL);
 		WriteFile(m_hFile_FSR, "\r\n", (DWORD)(sizeof(char)* 2), &nWritten, NULL);
 	}
@@ -1345,12 +1380,13 @@ void CUDT_IRDlg::DataSave_FSR(float fTime, double FSR1, double FSR2, double FSR3
 		WriteFile(m_hFile_FSR, strData, (DWORD)(sizeof(char)* strlen(strData)), &nWritten, NULL);
 
 		char str[100] = { 0, };
-		sprintf_s(str, "%.4f\t%.4f\t%.4f\t%.4f\t%.4f\t%.4f\t%.4f\t", FSR1, FSR2, FSR3, FSR4 - 300, FSR5 - 300, FSR6 - 300, trigger);
+		sprintf_s(str, "%.4f\t%.4f\t%.4f\t%.4f\t%.4f\t%.4f\t%.4f\t%.4f\t", FSR1, FSR2, FSR3, FSR4 - 300, FSR5 - 300, FSR6 - 300, trigger, m_fSpeed);
 		WriteFile(m_hFile_FSR, str, (DWORD)(sizeof(char)* strlen(str)), &nWritten, NULL);
 		WriteFile(m_hFile_FSR, "\r\n", (DWORD)(sizeof(char)* 2), &nWritten, NULL);
 
 	}
 }
+
 
 HRESULT CUDT_IRDlg::ProcessFrame(INT64 nTime, const UINT16* pBuffer, UINT nWidth, UINT nHeight)
 {
@@ -1410,8 +1446,8 @@ void CUDT_IRDlg::ProcessClose()
 		while (m_fSpeed > 0)
 		{
 			m_fSpeed -= 0.6f / m_fFPS;
-			float64 data[1] = { -m_fSpeed / 0.0505f / 2 / 3.141592f * 60 * 60 / 28 / 100 }; //gray treadmill
-			//float64 data[1] = { m_fSpeed / 0.0475f * 25 / 7 * 30 / 3.141592f / 100 }; // yellow treadmill
+			//float64 data[1] = { -m_fSpeed / 0.0505f / 2 / 3.141592f * 60 * 60 / 28 / 100 }; //gray treadmill
+			float64 data[1] = { m_fSpeed / 0.0475f * 25 / 7 * 30 / 3.141592f / 100 }; // yellow treadmill
 			if (DAQmxFailed(DAQmxWriteAnalogF64(m_hAOTask, 1, TRUE, 10.0, DAQmx_Val_GroupByChannel, data, NULL, NULL)))
 				PrintStr(&CString(_T("Check connection with Device...1")));
 			Sleep(33);
@@ -1431,16 +1467,6 @@ void CUDT_IRDlg::ProcessClose()
 		PrintStr(&CString("Counter Input Closed"));
 	}
 
-	if (m_hFile)
-	{
-		CloseHandle(m_hFile);
-		m_hFile = NULL;
-	}
-	if (m_hFile_FSR)
-	{
-		CloseHandle(m_hFile_FSR);
-		m_hFile_FSR = NULL;
-	}
 	m_switch = 0;
 	m_count = 0;
 	fSpeed_p = 0;

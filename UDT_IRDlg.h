@@ -13,6 +13,7 @@
 #include "resource.h"
 #include <NIDAQmx.h>
 #include "ChartViewer.h"
+#include <mmsystem.h>
 
 class CVRClientSocket;
 
@@ -45,6 +46,9 @@ class CUDT_IRDlg : public CDialogEx
 	// 생성입니다.
 public:
 	CUDT_IRDlg(CWnd* pParent = NULL);	// 표준 생성자입니다.
+
+	static void TimerProc(UINT uiID, UINT uiMsg, DWORD_PTR dwUser, DWORD_PTR dw1, DWORD_PTR dw2);
+	static void TimerProc_Kinect(UINT uiID, UINT uiMsg, DWORD_PTR dwUser, DWORD_PTR dw1, DWORD_PTR dw2);
 
 	// 대화 상자 데이터입니다.
 	enum { IDD = IDD_UDT_IR_DIALOG };
@@ -282,6 +286,9 @@ public:
 	afx_msg void OnStnClickedChart1();
 	CChartViewer m_ChartViewer;
 
+	double global_current_time;
+	double global_system_time;
+
 
 	double m_timeStamps[sampleSize];	// The timestamps for the data series
 	double m_dataSeriesA1[sampleSize];	// The values for the data series A1
@@ -301,6 +308,7 @@ public:
 	// Shift new data values into the real time data series 
 	void getData();
 	void kinectUpdate();
+	void chartUpdate();
 	// Draw chart
 	void drawChart(CChartViewer *viewer);
 	void trackLineLegend(XYChart *c, int mouseX);
