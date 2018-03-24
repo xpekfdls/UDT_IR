@@ -339,7 +339,7 @@ BOOL CUDT_IRDlg::OnInitDialog()
 	unsigned int Resolution = min(max(tc.wPeriodMin, 0), tc.wPeriodMax);
 	timeBeginPeriod(Resolution);
 
-	m_Timer_Kinect = timeSetEvent(30, Resolution, (LPTIMECALLBACK)TimerProc_Kinect, (DWORD_PTR)this, TIME_PERIODIC);
+	m_Timer_Kinect = timeSetEvent(10, Resolution, (LPTIMECALLBACK)TimerProc_Kinect, (DWORD_PTR)this, TIME_PERIODIC);
 
 	OnRunPB();
 

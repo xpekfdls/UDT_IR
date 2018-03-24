@@ -1,4 +1,4 @@
-﻿빌드 시작: 2018-03-25 오전 1:27:15
+﻿빌드 시작: 2018-03-25 오전 1:33:30
      1>2 노드의 "C:\Users\NREL\Documents\GitHub\UDTvsPS_experiment-C version\UDT_IR\UDT_IR.vcxproj" 프로젝트(Build 대상)입니다.
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /I"C:\Program Files\Microsoft SDKs\Kinect\v2.0_1409\\inc" /I"C:\Program Files (x86)\National Instruments\Shared\ExternalCompilerSupport\C\include" /Zi /nologo /W3 /WX- /sdl /Od /D WIN64 /D _WINDOWS /D _DEBUG /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"x64\Debug\UDT_IR.pch" /Fo"x64\Debug\\" /Fd"x64\Debug\vc120.pdb" /Gd /TP /errorReport:prompt UDT_IRDlg.cpp
@@ -31,4 +31,4 @@
 
 빌드했습니다.
 
-경과 시간: 00:00:02.23
+경과 시간: 00:00:02.25
