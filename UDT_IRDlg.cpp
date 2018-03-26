@@ -801,9 +801,6 @@ void CUDT_IRDlg::kinectUpdate()
 					{
 						m_fSpeed = (float)(m_fK1 * m_fPelAcc + (m_fK2 - 1) * m_fPelSpd + m_fK3 * (m_fPelPos - m_fXrpos)) + Vw;
 						m_fSpeed = m_fSpeed+2.5;
-						CString check;
-						check.Format(_T("%0.3f"), m_fSpeed);
-						PrintStr(&CString(_T("m_fSpeed") + check));
 					}
 
 
@@ -861,7 +858,7 @@ void CUDT_IRDlg::kinectUpdate()
 			{
 				char strSend2[27] = { 0, };
 
-				sprintf_s(strSend2, "%.3f %.2f %d\n", m_fSpeed, /*m_fHeadAngle,*/ m_fComfSpd /*,CalcArm(Joints)*/);//,m_fRepeatTime, m_fSteady_Time_Interval);
+				sprintf_s(strSend2, "%.3f %.2f %d %.2f %.3f\n", m_fSpeed, m_fComfSpd, m_fRepeatTime, m_fSteady_Time_Interval, global_current_time);//,m_fRepeatTime, m_fSteady_Time_Interval);
 				m_pVRClientSocket->Send(strSend2, static_cast<int>(strlen(strSend2)));
 			}
 
