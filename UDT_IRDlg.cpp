@@ -446,7 +446,7 @@ void CUDT_IRDlg::OnBnClickedBtnMode()
 		return;	// Terminate Function
 	}
 
-	char strSend2[27] = { 0, };
+	char strSend2[150] = { 0, };
 	for (UINT i = 0; i < 100; i++)
 	{
 		sprintf_s(strSend2, "%d\n", cModeDlg.m_nMode);
@@ -856,7 +856,7 @@ void CUDT_IRDlg::kinectUpdate()
 
 			if (m_pVRClientSocket)
 			{
-				char strSend2[27] = { 0, };
+				char strSend2[150] = { 0, };
 
 				sprintf_s(strSend2, "%.3f %.2f %d %.2f %.3f\n", m_fSpeed, m_fComfSpd, m_fRepeatTime, m_fSteady_Time_Interval, global_current_time);//,m_fRepeatTime, m_fSteady_Time_Interval);
 				m_pVRClientSocket->Send(strSend2, static_cast<int>(strlen(strSend2)));
@@ -894,8 +894,8 @@ void CUDT_IRDlg::getData()
 	if (m_hAITask)
 	{
 		int32 read;
-		float64 data[5000];
-		if (DAQmxFailed(DAQmxReadAnalogF64(m_hAITask, -1, 10.0, DAQmx_Val_GroupByChannel, data, 5000, &read, NULL)))
+		float64 data[1000];
+		if (DAQmxFailed(DAQmxReadAnalogF64(m_hAITask, -1, 10.0, DAQmx_Val_GroupByChannel, data, 1000, &read, NULL)))
 			PrintStr(&CString(_T("Error : AI/DAQmxReadAnalogF64 is not working")));
 		else
 		{
@@ -962,31 +962,32 @@ void CUDT_IRDlg::getData()
 		DataSave_FSR(global_current_time, m_dataSeriesA1[m_currentIndex - 1], m_dataSeriesA2[m_currentIndex - 1], m_dataSeriesA3[m_currentIndex - 1], m_dataSeriesA4[m_currentIndex - 1], m_dataSeriesA5[m_currentIndex - 1], m_dataSeriesA6[m_currentIndex - 1], m_dataSeriesA7[m_currentIndex - 1]);
 
 	}
-	//
-	// We provide some visual feedback to the latest numbers generated, so you can see the
-	// data being generated.
-	//
+	else{
+		//
+		// We provide some visual feedback to the latest numbers generated, so you can see the
+		// data being generated.
+		//
 
-	char buffer[1024];
+		//char buffer[1024];
 
-	sprintf_s(buffer, "%.2f", m_dataSeriesA1[m_currentIndex - 1]);
-	m_ValueA1.SetWindowText(CString(buffer));
+		//sprintf_s(buffer, "%.2f", m_dataSeriesA1[m_currentIndex - 1]);
+		//m_ValueA1.SetWindowText(CString(buffer));
 
-	sprintf_s(buffer, "%.2f", m_dataSeriesA2[m_currentIndex - 1]);
-	m_ValueA2.SetWindowText(CString(buffer));
+		//sprintf_s(buffer, "%.2f", m_dataSeriesA2[m_currentIndex - 1]);
+		//m_ValueA2.SetWindowText(CString(buffer));
 
-	sprintf_s(buffer, "%.2f", m_dataSeriesA3[m_currentIndex - 1]);
-	m_ValueA3.SetWindowText(CString(buffer));
+		//sprintf_s(buffer, "%.2f", m_dataSeriesA3[m_currentIndex - 1]);
+		//m_ValueA3.SetWindowText(CString(buffer));
 
-	sprintf_s(buffer, "%.2f", m_dataSeriesA4[m_currentIndex - 1]);
-	m_ValueA4.SetWindowText(CString(buffer));
+		//sprintf_s(buffer, "%.2f", m_dataSeriesA4[m_currentIndex - 1]);
+		//m_ValueA4.SetWindowText(CString(buffer));
 
-	sprintf_s(buffer, "%.2f", m_dataSeriesA5[m_currentIndex - 1]);
-	m_ValueA5.SetWindowText(CString(buffer));
+		//sprintf_s(buffer, "%.2f", m_dataSeriesA5[m_currentIndex - 1]);
+		//m_ValueA5.SetWindowText(CString(buffer));
 
-	sprintf_s(buffer, "%.2f", m_dataSeriesA6[m_currentIndex - 1]);
-	m_ValueA6.SetWindowText(CString(buffer));
-
+		//sprintf_s(buffer, "%.2f", m_dataSeriesA6[m_currentIndex - 1]);
+		//m_ValueA6.SetWindowText(CString(buffer));
+	}
 
 }
 
@@ -1278,7 +1279,7 @@ void CUDT_IRDlg::DataSave(float fTime)
 
 
 		DWORD nWritten;
-		char strData[73] = { 0 };
+		char strData[200] = { 0 };
 		sprintf_s(strData, "%% Time\t");
 		WriteFile(m_hFile, strData, (DWORD)(sizeof(char)* strlen(strData)), &nWritten, NULL);
 		sprintf_s(strData, "SBX\tSBY\tSBZ\tFRX\tFRY\tFRZ\tFLX\tFLY\tFLZ\tWRX\tWRY\tWRZ\tWLX\tWLY\tWLZ\t");

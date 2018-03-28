@@ -38,7 +38,7 @@ class CVRClientSocket;
 #define HIP_R 6
 #define HIP_L 7
 
-const int sampleSize = 240;
+const int sampleSize = 1000;
 
 // CUDT_IRDlg 대화 상자
 class CUDT_IRDlg : public CDialogEx
